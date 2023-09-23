@@ -15,7 +15,8 @@ const comp = computed(() => {
         title: prop.item.title,
         short_description: prop.item.short_description,
         media: prop.item.media,
-        opened: false
+        area: prop.item.area,
+        opened: false,
     }
 })
 
@@ -55,14 +56,17 @@ onMounted(() => {
 })
 </script>
 <template>
-        <div class="relative w-full border border-solid rounded-md">
+        <div class="relative w-full border border-solid rounded-md text-gray-forth">
             <img :src="comp.media" v-if="comp.media" class="object-cover w-full h-44" alt="">
+            <p class="relative z-40 px-5 py-1 -mt-8 border-t border-b bg-first-gray w-fit text-start">
+                {{ comp.area }}
+            </p>
             <div class="relative grid w-full h-full grid-cols-6 p-10 gap-x-5">
                 <div class="col-span-6">
-                    <p class="pb-8 font-sans text-sm text-slate-800 wrapper">
+                    <p class="pb-8 font-sans text-sm wrapper">
                         {{ comp.short_description }}
                     </p>
-                    <p class="pb-0 mt-2 text-xl uppercase cursor-pointer font-display text-slate-800"
+                    <p class="pb-0 mt-2 text-xl uppercase cursor-pointer font-display"
                     @click="loading(comp, $event)">
                         {{ comp.title }}
                     </p>

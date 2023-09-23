@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 
 //heroicons
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/solid";
-import { onMounted, reactive, ref, watch } from 'vue';
+import { nextTick, onMounted, reactive, ref, watch } from 'vue';
 
 const modules = reactive([Autoplay, Navigation, Scrollbar])
 
@@ -24,27 +24,15 @@ const swipe = ref(null)
 
 // const swiperSlide = useSwiperSlide();
 
+const contain = ref(null)
+
 
 // console.log();
 
 
 // methods
 const runForever = (evt) => {
-    // console.log(evt);
     swipe.value = evt
-
-    evt.slides.forEach((slide, index)=>{
-        console.log('something');
-        let letter = slide.querySelector(".title")
-        let description = slide.querySelector(".subtitle")
-        console.log(letter);
-        console.log(description);
-    //     let chars = SplitText.create(description, {type:"chars"})
-    //     let tl = gsap.timeline({paused:true})
-    //     tl.from(letter, {scale:0, opacity:0, ease:"back", duration:1})
-    //     .from(chars.chars, {opacity:0, yPercent:50, stagger:0.02}, "-=0.5")
-    //     slide.animation = tl
-    })
 }
 
 const swiperActive = (evt) => {
@@ -52,21 +40,12 @@ const swiperActive = (evt) => {
     gsap.to(evt.slides[evt.activeIndex], {scale:1, opacity:1})
     gsap.to(evt.slides[evt.previousIndex], {opacity:0.3, scale:0.8})
 
+    let titleActive = evt.slides[evt.activeIndex].querySelector('.title')
+    let categoryActive = evt.slides[evt.activeIndex].querySelector('.category')
 
-    let titleActive = evt.slides[evt.activeIndex].children[0].children[1].children[0].children[1]
-    let categoryActive = evt.slides[evt.activeIndex].children[0].children[1].children[0].children[0]
-
-    let titlePrev = evt.slides[evt.previousIndex].children[0].children[1].children[0].children[1]
-    let categoryPrev = evt.slides[evt.previousIndex].children[0].children[1].children[0].children[0]
-
-    titleActive.addClass('animate__animated', 'animate__fadeInDownBig')
-    titlePrev.addClass('animate__animated', 'animate__fadeInDownBig')
-
-    // evt.slides[evt.activeIndex].addClass('animate__animated', 'animate__fadeInDownBig')
-    // evt.slides[evt.activeIndex].removeClass('animate__animated', 'animate__fadeInDownBig', 'delay4')
-
-    console.log(evt.slides[evt.activeIndex].children[0].children[1].children[0]);
-
+    gsap.fromTo(evt.slides[evt.activeIndex], {y: 200}, {y: 0, duration: 2})
+    gsap.fromTo(titleActive, {y: -200, opacity: 0}, {y: 0, duration: 1, opacity: 1})
+    gsap.fromTo(categoryActive, {y: -200, opacity: 0}, {y: 0, duration: 1, opacity: 1, delay: 1})
 }
 
 
@@ -102,8 +81,20 @@ onMounted(() => {
         },
     )
 
-    // runForever()
+    console.log(swipe.value);
+
+    nextTick(() => {
+        let docload = contain.value[0]
+
+        let titleActive = docload.querySelector('.title')
+        let categoryActive = docload.querySelector('.category')
+
+        gsap.fromTo(titleActive, {y: -200, opacity: 0}, {y: 0, duration: 1, opacity: 1})
+        gsap.fromTo(categoryActive, {y: -200, opacity: 0}, {y: 0, duration: 1, opacity: 1, delay: 1})
+    })
 })
+
+
 
 watch(swipe, (val) => {
     // console.log(val);
@@ -127,18 +118,13 @@ watch(swipe, (val) => {
 
 <template>
         <div class="relative h-[60vh] w-full px-0 py-5 type">
-            <!-- :autoplay="true" -->
-            <!-- :autoplay="{
-            delay: 4000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        }" -->
         <swiper
         @slideChange="swiperActive"
         @swiper="runForever"
         :slides-per-view="1"
         :space-between="50"
         :loop="true"
+        :autoplay="true"
         class="w-full h-full"
         :navigation="{
             nextEl: '.left',
@@ -148,17 +134,15 @@ watch(swipe, (val) => {
             <swiper-slide
             data-swiper-autoplay="5000"
             v-for="item in items" :key="item.id"
-            class="w-full font-sans text-base text-slate-800">
+            class="w-full font-sans text-base text-forth-gray">
                 <div class="relative grid w-full h-full grid-cols-12 gap-x-8">
                     <img :src="item.src" class="absolute w-full col-span-12 object-fit h-hull">
                     <div class="z-40 flex items-center h-full col-span-3 col-start-2">
-                        <div class="p-1 my-auto animates bg-slate-50">
-                            <!-- <h1 class="mb-4 category text-slate-800 animate__animated animate__fadeInDownBig"> -->
-                            <h1 class="mb-4 category text-slate-800 animate__animated animate__fadeInDownBig">
+                        <div class="p-2 my-auto bg-slate-50" ref="contain">
+                            <h1 class="mb-4 category text-slate-800">
                                 {{ item.category }}
                             </h1>
-                            <!-- <h2 class="w-11/12 text-3xl title text-slate-500 animate__animated animate__fadeInDownBig delay4"> -->
-                            <h2 class="w-11/12 text-3xl title text-slate-500 animate__animated animate__fadeInDownBig delay4">
+                            <h2 class="w-11/12 text-3xl title text-slate-500">
                                 {{ item.title }}
                             </h2>
                         </div>

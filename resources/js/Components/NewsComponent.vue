@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 <template>
     <!-- <div class="relative w-full px-0 shadow-inner rounded-lg bg-gradient-to-t from-slate-500 from-10% to-slate-50 to-35% py-5"> -->
-    <div class="relative w-full px-0 py-5 rounded-lg shadow-inner bg-slate-50 drop-shadow-lg">
+    <div class="relative w-full px-0 py-5 rounded-lg shadow-inner bg-first-gray drop-shadow-lg">
         <swiper
         :slides-per-view="1"
         :space-between="50"
@@ -41,7 +41,7 @@ onMounted(() => {
             <swiper-slide
             data-swiper-autoplay="5000"
             v-for="notizia in prop.news" :key="notizia.id"
-            class="w-full font-sans text-base text-slate-800">
+            class="w-full font-sans text-base text-forth-gray">
                 <div class="grid w-full grid-cols-12 gap-x-8">
                     <div class="col-span-1 my-auto">
                         <p class="px-3 py-.5 text-sm font-display border rounded-md w-fit border-blue-950">

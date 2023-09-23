@@ -133,6 +133,7 @@ class HomeController extends Controller
             return [
                 'title' => $item->title,
                 'short_description' => $item->short_description,
+                'area' => $item->area,
                 'description' => $item->description,
                 'media' => $url,
             ];

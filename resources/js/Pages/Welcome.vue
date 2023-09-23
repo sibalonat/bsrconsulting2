@@ -68,8 +68,6 @@ onMounted(() => {
 
   itemsString.value = items.value.length.toString()
 
-//   DynamicHeroIcons
-// ServizesFront
 
 })
 
@@ -80,11 +78,6 @@ onMounted(() => {
 <template>
     <Head title="Benvenuti" />
     <div class="w-screen overflow-x-hidden">
-
-            <!-- <div class="w-screen mx-auto my-auto bg-slate-800"> -->
-                <!-- #F2F2F2 -->
-            <!-- <div class="w-screen mx-auto my-auto bg-gradient-to-t from-slate-500 from-10% to-slate-50 to-35%"> -->
-            <!-- <div class="w-full mx-auto my-auto overflow-x-hidden bg-gradient-to-t from-slate-500 from-0% to-slate-50 to-75%"> -->
             <div class="w-full mx-auto my-auto overflow-x-hidden bg-gradient-to-t from-third-gray from-0% via-second-gray via-20% to-first-gray to-75%">
                 <div
                 class="container mx-auto font-sans">
@@ -101,18 +94,7 @@ onMounted(() => {
                                 <p class="my-auto">menu one</p>
                             </div>
                         </div>
-                        <!-- <div class="grid grid-cols-12 gap-x-5">
-                            <div>
-                                <img :src="'/images/bsrlogo.svg'" alt="">
-                            </div>
-                            <div class="grid grid-cols-12 col-span-11 divide-x gap-x-4">
-                                <p>menu one</p>
-                                <p>menu one</p>
-                                <p>menu one</p>
-                                <p>menu one</p>
-                                <p>menu one</p>
-                            </div>
-                        </div> -->
+
                     </div>
                     <!-- <div class="relative flex justify-start w-full mb-10">
                         <BigBall />
@@ -131,16 +113,14 @@ onMounted(() => {
                     </div>
 
                     <hr class="w-10/12 mx-auto mt-5 border-4">
-
-
                 </div>
             </div>
-            <!-- <div class="w-full py-10 mx-auto my-auto bg-gradient-to-t from-slate-500 from-0% to-slate-50 to-75%"> -->
             <div class="w-full py-10 mx-auto my-auto">
                 <div
                 class="container mx-auto font-sans">
+
                     <div class="grid content-center w-2/3 grid-cols-2 gap-8 mx-auto h-fit">
-                        <CardsComponent class="drop-shadow-lg" v-for="item in items" :key="item.id" :item="item" />
+                        <ServizesFront v-for="item in servizes" :key="item.id" :item="item" />
                     </div>
                 </div>
             </div>
@@ -148,7 +128,7 @@ onMounted(() => {
                 <div
                 class="container mx-auto font-sans">
                     <div class="grid content-center w-2/3 grid-cols-2 gap-8 mx-auto h-fit">
-                        <ServizesFront v-for="item in servizes" :key="item.id" :item="item" />
+                        <CardsComponent class="drop-shadow-lg" v-for="item in items" :key="item.id" :item="item" />
                     </div>
                 </div>
             </div>
