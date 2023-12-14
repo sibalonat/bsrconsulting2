@@ -7,9 +7,6 @@ const prop = defineProps({
     item: Object
 })
 
-// refs
-// const it =
-// computed
 const comp = computed(() => {
     return {
         title: prop.item.title,

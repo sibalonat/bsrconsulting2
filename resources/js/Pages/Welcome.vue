@@ -100,7 +100,7 @@ onMounted(() => {
                             <div class="basis-1/12">
                                 <img class="w-2/3 col-span-3" :src="'/images/bsrlogo.svg'" alt="">
                             </div>
-                            <div class="grid grid-cols-12 basis-10/12 text-ebony">
+                            <div class="grid grid-cols-12 uppercase basis-10/12 text-ebony">
                                 <p class="col-start-2 my-auto">menu one</p>
                                 <p class="my-auto">menu one</p>
                                 <p class="my-auto">menu one</p>
