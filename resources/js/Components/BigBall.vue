@@ -91,8 +91,6 @@ onMounted(() => {
         shadowAnimation.play();
     }
 
-
-
     setTimeout(() => {
         fitElementToParent(sphereEl);
     }, 100)

@@ -7,7 +7,7 @@ import BigSlider from "@/Components/BigSlider.vue";
 import { onMounted, ref } from 'vue';
 import DynamicHeroIcons from '@/Components/DynamicHeroIcons.vue';
 
-import BigBall from "@/Components/BigBall.vue";
+// import BigBall from "@/Components/BigBall.vue";
 import ServizesFront from "@/Components/ServizesFront.vue";
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 
@@ -82,7 +82,17 @@ onMounted(() => {
     <Head title="Benvenuti" />
 
     <div class="w-screen overflow-x-hidden">
-            <div class="w-full mx-auto my-auto overflow-x-hidden bg-gradient-to-t from-third-gray from-0% via-second-gray via-20% to-first-gray to-75%">
+            <div class="grid w-full grid-cols-12 gap-2 mx-auto bg-slight">
+                <p class="col-span-4 col-start-2 my-4 ml-8 text-sm font-medium text-ebony">
+                    <DynamicHeroIcons name="envelope" :size="5" class="inline" />
+                    <span class="">
+                        antonio.barcela@something.com
+                    </span>
+                </p>
+            </div>
+            <hr class="border border-ebony drop-shadow-md">
+            <!-- <div class="w-full pt-8 mx-auto my-auto overflow-x-hidden bg-gradient-to-t from-hap from-0% via-mbyll via-20% to-ebony to-75%"> -->
+            <div class="w-full pt-8 mx-auto my-auto overflow-x-hidden bg-gradient-to-t from-hap from-0% to-slight to-75%">
                 <div
                 class="container mx-auto font-sans">
                     <div class="w-full">
@@ -90,7 +100,7 @@ onMounted(() => {
                             <div class="basis-1/12">
                                 <img class="w-2/3 col-span-3" :src="'/images/bsrlogo.svg'" alt="">
                             </div>
-                            <div class="grid grid-cols-12 basis-10/12">
+                            <div class="grid grid-cols-12 basis-10/12 text-ebony">
                                 <p class="col-start-2 my-auto">menu one</p>
                                 <p class="my-auto">menu one</p>
                                 <p class="my-auto">menu one</p>
@@ -100,9 +110,6 @@ onMounted(() => {
                         </div>
 
                     </div>
-                    <!-- <div class="relative flex justify-start w-full mb-10">
-                        <BigBall />
-                    </div> -->
                     <div class="relative w-full mb-10">
                         <BigSlider />
                     </div>

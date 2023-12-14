@@ -17,6 +17,12 @@ export default {
                 'display': ['Oswald', ...defaultTheme.fontFamily.serif],
             },
             colors: {
+                'ebony': '#57574B',
+                'hap': '#ADAE89',
+                'mbyll': '#787867',
+                'quasi': '#385C5D',
+                'qiell': '#698F8F',
+                'slight': '#ECECE4',
                 'first-gray': '#F2F2F2',
                 'second-gray': '#BFBFBF',
                 'third-gray': '#8C8C8C',
