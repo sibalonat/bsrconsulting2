@@ -7,12 +7,15 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // modal
 import Modal from "@/Components/Modal.vue";
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
+
+import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 // heroicons
-import { XCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { XCircleIcon } from '@heroicons/vue/24/outline';
 
-import DynamicHeroIcons from '@/Components/DynamicHeroIcons.vue';
+// import DynamicHeroIcons from '@/Components/DynamicHeroIcons.vue';
 
 // props
 const prop = defineProps({
@@ -24,6 +27,8 @@ const show = ref(false)
 
 const editor = ref(null)
 const content = ref(null)
+
+const showCropper = ref(false)
 
 const optionquill = reactive({
     modules: {
@@ -38,7 +43,6 @@ const optionquill = reactive({
 const number = ref(false)
 
 // methods
-
 const submitRequest = (flds, node) => {
     useInertia(node).post(route('services.store'), flds)
     show.value = false
@@ -48,27 +52,28 @@ const changedContentEn = (evt) => {
     content.value = JSON.stringify(evt)
 }
 
+const handleFileChange = (ev) => {
+    console.log(ev);
+}
+
 
 
 // hooks
 onMounted(() => {
-    console.log(prop.services);
     setTimeout(() => {
         number.value = true
     }, 100)
-
-    // DynamicHeroIcons
 })
 
 // watch
-watch(editor, (val) => {
-    // console.log(val.getEditor());
-    // console.log(val.getContents());
-    // console.log(number.value === true && val.getEditor());
-    // if (number.value === true && val.getEditor()) {
-    //     editor.value.getQuill().setContents(JSON.parse(textArea.teaser_al), 'silent')
-    // }
-}, {immediate: true, deep: true})
+// watch(editor, (val) => {
+//     // console.log(val.getEditor());
+//     // console.log(val.getContents());
+//     // console.log(number.value === true && val.getEditor());
+//     // if (number.value === true && val.getEditor()) {
+//     //     editor.value.getQuill().setContents(JSON.parse(textArea.teaser_al), 'silent')
+//     // }
+// }, {immediate: true, deep: true})
 
 </script>
 
@@ -113,16 +118,8 @@ watch(editor, (val) => {
         <Modal :max-width="'7xl'" :show="show">
             <div class="w-full h-[80vh]">
                 <div class="ml-auto w-36 mt-7">
-                    <!-- <div>
-
-                    </div> -->
                     <XCircleIcon class="mx-auto text-gray-400 cursor-pointer w-11 h-11"
                     @click="show = false" />
-                    <!-- <DynamicHeroIcons
-                    name="x-circle"
-                    :size="14"
-                    class="ml-auto text-gray-400 cursor-pointer "
-                    @click="show = false" /> -->
                 </div>
                 <div class="w-full mx-auto px-11 mt-11 h-4/5">
                     <p class="flex w-full mb-3 -mt-8 text-lg font-semibold uppercase">
@@ -171,6 +168,7 @@ watch(editor, (val) => {
                             <div class="relative grid grid-2 gap-x-4">
                                 <FormKit
                                 type="file"
+                                @change="handleFileChange"
                                 name="fileUpload"
                                 label="Foto del servizio"
                                 multiple="false"
@@ -183,11 +181,21 @@ watch(editor, (val) => {
                                     noFiles: '$reset hidden',
                                     fileName: '$reset hidden',
                                     fileRemove: '$reset absolute top-10 right-3 text-xs'
-                                }"
-                                />
-                                <!-- accept=".png,.jpg,.jpeg" -->
-                                <!-- help="Seleziona una imagine per attachare a questo servizio" -->
-                                <!-- {{ content }} -->
+                                }" />
+                                <vue-cropper
+                                v-if="showCropper"
+                                ref="cropper"
+                                :src="imageSrc"
+                                :aspect-ratio="1"
+                                :view-mode="1"
+                                :drag-mode="'crop'"
+                                :background="true"
+                                :rotatable="true"
+                                :guides="true"
+                                :container-style="{ width: '100%', height: '400px' }"
+                                :img-style="{ width: '100%', height: '100%' }"
+                                ></vue-cropper>
+
                                 <FormKit type="hidden" name="description" v-model="content" />
                                 <QuillEditor
                                 v-if="number"
