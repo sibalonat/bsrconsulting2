@@ -29,6 +29,9 @@ export default {
                 'forth-gray': '#404040',
                 'fifth-gray': '#0D0D0D',
             },
+            minHeight: {
+                '44': '12rem',
+            }
         },
     },
 

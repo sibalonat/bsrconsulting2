@@ -126,7 +126,7 @@ onMounted(() => {
                     <hr class="w-10/12 mx-auto mt-5 border-4">
                 </div>
             </div>
-            <div class="w-full py-10 mx-auto my-auto">
+            <div class="w-full py-10 mx-auto my-auto bg-slight">
                 <div
                 class="container mx-auto font-sans">
 
