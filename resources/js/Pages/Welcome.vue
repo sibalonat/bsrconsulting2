@@ -9,6 +9,7 @@ import DynamicHeroIcons from '@/Components/DynamicHeroIcons.vue';
 
 import BigBall from "@/Components/BigBall.vue";
 import ServizesFront from "@/Components/ServizesFront.vue";
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 
 // props
 const prop = defineProps({
@@ -68,6 +69,8 @@ onMounted(() => {
 
   itemsString.value = items.value.length.toString()
 
+//   GuestLayout
+
 
 })
 
@@ -77,6 +80,7 @@ onMounted(() => {
 
 <template>
     <Head title="Benvenuti" />
+
     <div class="w-screen overflow-x-hidden">
             <div class="w-full mx-auto my-auto overflow-x-hidden bg-gradient-to-t from-third-gray from-0% via-second-gray via-20% to-first-gray to-75%">
                 <div
@@ -133,6 +137,8 @@ onMounted(() => {
                 </div>
             </div>
     </div>
+
+
 
 </template>
 

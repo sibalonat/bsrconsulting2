@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiziController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,7 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [
-    HomeController::class, 'home'
+    ServiziController::class, 'home'
 ]);
 
 // Route::get('/dashboard', function () {

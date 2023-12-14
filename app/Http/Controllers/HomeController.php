@@ -125,24 +125,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function home()
-    {
-        $services = collect(Service::with('media')->get());
-        $mapped = $services->map(function($item) {
-            $url = $item->getFirstMediaUrl('servicePic', 'thumbimg');
-            return [
-                'title' => $item->title,
-                'short_description' => $item->short_description,
-                'area' => $item->area,
-                'description' => $item->description,
-                'media' => $url,
-            ];
-        });
-        return Inertia::render('Welcome', [
-            'articles' => Article::all(),
-            'servizes' => $mapped
-        ]);
-    }
+
 
     /**
      * Remove the specified resource from storage.
