@@ -93,7 +93,6 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $service = Service::create([
             'title' => $request->title,
             'area' => $request->area,
@@ -101,9 +100,10 @@ class HomeController extends Controller
             'short_description' => $request->short_description,
         ]);
 
-        $file = $request->fileUpload[0]['file'];
+        // $file = $request->fileUpload[0]['file'];
+        $file = $request->fileUpload;
 
-        $service->addMedia($file)->toMediaCollection('servicePic');
+        $service->addMediaFromBase64($file)->toMediaCollection('servicePic');
     }
 
     /**

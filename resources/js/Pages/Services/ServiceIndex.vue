@@ -7,7 +7,7 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // modal
 import Modal from "@/Components/Modal.vue";
-import { onMounted, reactive, ref } from 'vue';
+import { nextTick, onMounted, reactive, ref } from 'vue';
 
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
@@ -48,6 +48,7 @@ const number = ref(false)
 const submitRequest = (flds, node) => {
     useInertia(node).post(route('services.store'), flds)
     show.value = false
+    imageSrc.value = ''
 }
 
 const changedContentEn = (evt) => {
@@ -69,7 +70,10 @@ const handleFileChange = (ev) => {
 const saveImage = () => {
     const canvas = cropper.value.getCroppedCanvas()
     const croppedImage = canvas.toDataURL('image/jpeg');
-    console.log(croppedImage);
+    showCropper.value = false;
+    nextTick(() => {
+        imageSrc.value = croppedImage
+    });
 }
 
 
@@ -193,8 +197,8 @@ onMounted(() => {
                             </div>
                             <div class="relative grid grid-2 gap-x-4">
                                 <FormKit
+                                v-if="!imageSrc.length"
                                 type="file"
-                                v-model="imageSrc"
                                 @change="handleFileChange"
                                 name="fileUpload"
                                 label="Foto del servizio"
@@ -210,6 +214,7 @@ onMounted(() => {
                                     fileRemove: '$reset absolute top-10 right-3 text-xs'
                                 }" />
 
+                                <FormKit type="hidden" name="fileUpload" v-model="imageSrc" />
                                 <FormKit type="hidden" name="description" v-model="content" />
                                 <QuillEditor
                                 v-if="number"
