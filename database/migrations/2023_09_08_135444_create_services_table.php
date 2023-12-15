@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('area');
-            $table->text('short_description');
+            $table->text('short_description')->default('');
             $table->json('description');
             $table->timestamps();
         });
