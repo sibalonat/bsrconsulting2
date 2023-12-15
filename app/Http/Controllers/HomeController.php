@@ -24,17 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://ambtirana.esteri.it/ambasciata_tirana/sq/ambasciata/news/dall_ambasciata');
+        $response = Http::get('https://ambtirana.esteri.it/sq/news/dall_ambasciata/');
 
         $dom = new Dom;
 
         $dom->loadStr($response->body());
 
-        $titlelinkcollection = $dom->find('.desc_lista');
+        $titlelinkcollection = $dom->find('.card-big');
 
         $titleandlink = collect($titlelinkcollection);
 
         $extracted = $titleandlink->map(function ($item) {
+            ds($item);
             $title = $item->firstChild()->getTag()->getAttribute('title')->getValue();
             $href = $item->firstChild()->getTag()->getAttribute('href')->getValue();
             $data = $item->getParent()->firstChild()->firstChild()->text;
@@ -96,14 +97,18 @@ class HomeController extends Controller
         $service = Service::create([
             'title' => $request->title,
             'area' => $request->area,
-            'description' => $request->description,
+            // 'description' => $request->description,
             'short_description' => $request->short_description,
         ]);
 
         // $file = $request->fileUpload[0]['file'];
-        $file = $request->fileUpload;
+        // $file = $request->fileUpload;
 
-        $service->addMediaFromBase64($file)->toMediaCollection('servicePic');
+        // $service->addMediaFromBase64($file)->toMediaCollection('servicePic');
+
+        $file = $request->fileUpload[0]['file'];
+
+        $service->addMedia($file)->toMediaCollection('servicePic');
     }
 
     /**

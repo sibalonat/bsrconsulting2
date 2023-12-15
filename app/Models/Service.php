@@ -13,7 +13,12 @@ class Service extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['title', 'area', 'description', 'short_description'];
+    protected $fillable = [
+        'title',
+        'area',
+        // 'description',
+        'short_description'
+    ];
 
     protected $with = ['media'];
 

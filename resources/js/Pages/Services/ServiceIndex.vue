@@ -3,14 +3,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useInertia } from "formkit-addon-inertia";
 // quill editor
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
+// import { QuillEditor } from '@vueup/vue-quill'
+// import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // modal
 import Modal from "@/Components/Modal.vue";
-import { nextTick, onMounted, reactive, ref } from 'vue';
-
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
+import { onMounted, ref } from 'vue';
 
 // heroicons
 import { XCircleIcon } from '@heroicons/vue/24/outline';
@@ -28,19 +25,15 @@ const show = ref(false)
 const editor = ref(null)
 const content = ref(null)
 
-const showCropper = ref(false)
-const imageSrc = ref('')
-const cropper = ref('')
-
-const optionquill = reactive({
-    modules: {
-        toolbar: ['bold', 'italic', 'underline']
-    },
-    placeholder: 'Write author bio...',
-    readOnly: false,
-    scrollingContainer: 'html',
-    theme: 'snow'
-})
+// const optionquill = reactive({
+//     modules: {
+//         toolbar: ['bold', 'italic', 'underline']
+//     },
+//     placeholder: 'Write author bio...',
+//     readOnly: false,
+//     scrollingContainer: 'html',
+//     theme: 'snow'
+// })
 
 const number = ref(false)
 
@@ -48,34 +41,11 @@ const number = ref(false)
 const submitRequest = (flds, node) => {
     useInertia(node).post(route('services.store'), flds)
     show.value = false
-    imageSrc.value = ''
 }
 
-const changedContentEn = (evt) => {
-    content.value = JSON.stringify(evt)
-}
-
-const handleFileChange = (ev) => {
-    const file = ev.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            imageSrc.value = e.target.result;
-            showCropper.value = true;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-const saveImage = () => {
-    const canvas = cropper.value.getCroppedCanvas()
-    const croppedImage = canvas.toDataURL('image/jpeg');
-    showCropper.value = false;
-    nextTick(() => {
-        imageSrc.value = croppedImage
-    });
-}
-
+// const changedContentEn = (evt) => {
+//     content.value = JSON.stringify(evt)
+// }
 
 
 // hooks
@@ -138,25 +108,7 @@ onMounted(() => {
                         Crea un servizio
                     </p>
                     <div class="relative w-full h-full">
-                        <div
-                        class="w-full"
-                        v-if="showCropper">
-                            <vue-cropper
-                            ref="cropper"
-                            :src="imageSrc"
-                            :aspect-ratio="1"
-                            :view-mode="1"
-                            :drag-mode="'crop'"
-                            :background="true"
-                            :rotatable="true"
-                            :guides="true"
-                            :container-style="{ width: '100%', height: '400px' }"
-                            :img-style="{ width: '100%', height: '100%' }"
-                            ></vue-cropper>
-                            <button @click="saveImage">Salva</button>
-                        </div>
                         <FormKit
-                        v-else
                         ref="formacat"
                         type="form"
                         :actions="false"
@@ -197,9 +149,7 @@ onMounted(() => {
                             </div>
                             <div class="relative grid grid-2 gap-x-4">
                                 <FormKit
-                                v-if="!imageSrc.length"
                                 type="file"
-                                @change="handleFileChange"
                                 name="fileUpload"
                                 label="Foto del servizio"
                                 multiple="false"
@@ -213,15 +163,13 @@ onMounted(() => {
                                     fileName: '$reset hidden',
                                     fileRemove: '$reset absolute top-10 right-3 text-xs'
                                 }" />
-
-                                <FormKit type="hidden" name="fileUpload" v-model="imageSrc" />
                                 <FormKit type="hidden" name="description" v-model="content" />
-                                <QuillEditor
+                                <!-- <QuillEditor
                                 v-if="number"
                                 ref="editor"
                                 :options="optionquill"
                                 @update:content="changedContentEn($event)"
-                                @focus="optionquill.placeholder = ''" />
+                                @focus="optionquill.placeholder = ''" /> -->
                             </div>
                         </div>
                         <div class="absolute right-0 grid w-1/2 grid-cols-2 gap-x-4 bottom-28 justify-items-end">
