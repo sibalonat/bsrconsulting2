@@ -29,6 +29,8 @@ const editor = ref(null)
 const content = ref(null)
 
 const showCropper = ref(false)
+const imageSrc = ref('')
+const cropper = ref('')
 
 const optionquill = reactive({
     modules: {
@@ -53,7 +55,21 @@ const changedContentEn = (evt) => {
 }
 
 const handleFileChange = (ev) => {
-    console.log(ev);
+    const file = ev.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imageSrc.value = e.target.result;
+            showCropper.value = true;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+const saveImage = () => {
+    const canvas = cropper.value.getCroppedCanvas()
+    const croppedImage = canvas.toDataURL('image/jpeg');
+    console.log(croppedImage);
 }
 
 
@@ -66,14 +82,6 @@ onMounted(() => {
 })
 
 // watch
-// watch(editor, (val) => {
-//     // console.log(val.getEditor());
-//     // console.log(val.getContents());
-//     // console.log(number.value === true && val.getEditor());
-//     // if (number.value === true && val.getEditor()) {
-//     //     editor.value.getQuill().setContents(JSON.parse(textArea.teaser_al), 'silent')
-//     // }
-// }, {immediate: true, deep: true})
 
 </script>
 
@@ -126,7 +134,25 @@ onMounted(() => {
                         Crea un servizio
                     </p>
                     <div class="relative w-full h-full">
+                        <div
+                        class="w-full"
+                        v-if="showCropper">
+                            <vue-cropper
+                            ref="cropper"
+                            :src="imageSrc"
+                            :aspect-ratio="1"
+                            :view-mode="1"
+                            :drag-mode="'crop'"
+                            :background="true"
+                            :rotatable="true"
+                            :guides="true"
+                            :container-style="{ width: '100%', height: '400px' }"
+                            :img-style="{ width: '100%', height: '100%' }"
+                            ></vue-cropper>
+                            <button @click="saveImage">Salva</button>
+                        </div>
                         <FormKit
+                        v-else
                         ref="formacat"
                         type="form"
                         :actions="false"
@@ -168,6 +194,7 @@ onMounted(() => {
                             <div class="relative grid grid-2 gap-x-4">
                                 <FormKit
                                 type="file"
+                                v-model="imageSrc"
                                 @change="handleFileChange"
                                 name="fileUpload"
                                 label="Foto del servizio"
@@ -182,19 +209,6 @@ onMounted(() => {
                                     fileName: '$reset hidden',
                                     fileRemove: '$reset absolute top-10 right-3 text-xs'
                                 }" />
-                                <vue-cropper
-                                v-if="showCropper"
-                                ref="cropper"
-                                :src="imageSrc"
-                                :aspect-ratio="1"
-                                :view-mode="1"
-                                :drag-mode="'crop'"
-                                :background="true"
-                                :rotatable="true"
-                                :guides="true"
-                                :container-style="{ width: '100%', height: '400px' }"
-                                :img-style="{ width: '100%', height: '100%' }"
-                                ></vue-cropper>
 
                                 <FormKit type="hidden" name="description" v-model="content" />
                                 <QuillEditor
