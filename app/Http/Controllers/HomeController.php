@@ -80,10 +80,7 @@ class HomeController extends Controller
             ];
         });
 
-        // dd($mapped);
-
         return inertia('Services/ServiceIndex', [
-            // 'services' => Service::all()
             'services' => $mapped
         ]);
     }
@@ -99,11 +96,6 @@ class HomeController extends Controller
             // 'description' => $request->description,
             'short_description' => $request->short_description,
         ]);
-
-        // $file = $request->fileUpload[0]['file'];
-        // $file = $request->fileUpload;
-
-        // $service->addMediaFromBase64($file)->toMediaCollection('servicePic');
 
         $file = $request->fileUpload[0]['file'];
 
