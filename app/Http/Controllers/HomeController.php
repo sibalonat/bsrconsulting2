@@ -30,19 +30,18 @@ class HomeController extends Controller
 
         $dom->loadStr($response->body());
 
-        $titlelinkcollection = $dom->find('.card-big');
+        $datacollection = $dom->find('.data');
+        $titlelinkcollection = $dom->find('.read-more');
 
         $titleandlink = collect($titlelinkcollection);
 
-        $extracted = $titleandlink->map(function ($item) {
-            ds($item);
-            $title = $item->firstChild()->getTag()->getAttribute('title')->getValue();
-            $href = $item->firstChild()->getTag()->getAttribute('href')->getValue();
-            $data = $item->getParent()->firstChild()->firstChild()->text;
+        $extracted = $titleandlink->map(function ($item, $index) use ($datacollection) {
+            $title = $item->getTag()->getAttribute('title')->getValue();
+            $href = $item->getTag()->getAttribute('href')->getValue();
             return [
                 'title' => $title,
                 'href' => 'https://ambtirana.esteri.it'.$href,
-                'data' => $data
+                'data' => $datacollection[$index]->firstChild()->text
             ];
         });
 
