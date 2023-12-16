@@ -1,34 +1,36 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { useInertia } from "formkit-addon-inertia";
+import { Head, useForm } from '@inertiajs/vue3';
 
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 
-// heroicons
-
-// import DynamicHeroIcons from '@/Components/DynamicHeroIcons.vue';
 
 // props
 const prop = defineProps({
-    services: Array
+    settings: Array
 })
 
 // refs
 const show = ref(false)
 
+const form = useForm({
+    email: null,
+    address: null,
+})
+
+// form
+
 
 // methods
-const submitRequest = (flds, node) => {
-    useInertia(node).post(route('services.store'), flds)
-    show.value = false
-}
-
-
 
 
 // hooks
-onMounted(() => {})
+onBeforeMount(() => {
+    prop.settings.forEach(element => {
+        form.address = element.address
+        form.email = element.email
+    });
+})
 
 // watch
 
@@ -47,8 +49,23 @@ onMounted(() => {})
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="p-3 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+                    <div class="max-h-[30vh] h-full w-full">
+                        <form @submit.prevent="form.post('/login')">
+                            <div class="grid grid-cols-2 gap-x-2">
+                                <div>
+                                    <input type="text" v-model="form.email">
+                                    <div v-if="form.errors.email">{{ form.errors.email }}</div>
+                                </div>
+                                <div>
+                                    <input type="text" v-model="form.address">
+                                    <div v-if="form.errors.address">{{ form.errors.address }}</div>
+                                </div>
+                                <button type="submit" :disabled="form.processing">Login</button>
 
+                            </div>
 
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiziController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,18 +23,21 @@ Route::get('/', [
     ServiziController::class, 'home'
 ]);
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', [
     HomeController::class, 'index'
 ])->name('dashboard');
+
 Route::get('/services', [
     HomeController::class, 'services'
 ])->name('services');
+
 Route::post('/services', [
     HomeController::class, 'store'
 ])->name('services.store');
+
+Route::get('/settings', [
+    SettingController::class, 'index'
+])->name('settings');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

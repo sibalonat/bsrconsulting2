@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
-use App\Models\Service;
 use Inertia\Inertia;
 use PHPHtmlParser\Dom;
-use Illuminate\Http\Request;
+use App\Models\Article;
+use App\Models\Service;
+use App\Models\Setting;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
@@ -59,6 +60,14 @@ class HomeController extends Controller
                     'data' => $extracted[$key]['data'],
                 ]);
             }
+        }
+
+        $settings = Setting::all()->count();
+        if (!$settings) {
+            Setting::create([
+                'email' => '',
+                'address' => '',
+            ]);
         }
 
         return Inertia::render('Dashboard');
