@@ -39,6 +39,10 @@ Route::get('/settings', [
     SettingController::class, 'index'
 ])->name('settings');
 
+Route::put('/settings/{setting}', [
+    SettingController::class, 'store'
+])->name('settings.store');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

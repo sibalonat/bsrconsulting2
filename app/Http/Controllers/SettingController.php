@@ -13,4 +13,12 @@ class SettingController extends Controller
             'settings' => Setting::all()
         ]);
     }
+
+    public function store(Request $request, Setting $setting)
+    {
+        $setting->update([
+            'email' => $request->email,
+            'address' => $request->address,
+        ]);
+    }
 }

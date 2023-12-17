@@ -22,7 +22,9 @@ const form = useForm({
 
 
 // methods
-
+const saveSetting = () => {
+    form.put(route('settings.store', prop.settings[0]))
+}
 
 // hooks
 onBeforeMount(() => {
@@ -50,17 +52,24 @@ onBeforeMount(() => {
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="p-3 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                     <div class="max-h-[30vh] h-full w-full">
-                        <form @submit.prevent="form.post('/login')">
-                            <div class="grid grid-cols-2 gap-x-2">
-                                <div>
-                                    <input type="text" v-model="form.email">
+                        <form @submit.prevent="saveSetting">
+                            <div class="grid grid-cols-2 gap-2 ">
+                                <div class="flex flex-col">
+                                    <label>Email</label>
+                                    <input type="text" v-model="form.email" class="rounded-md border-slate-400">
                                     <div v-if="form.errors.email">{{ form.errors.email }}</div>
                                 </div>
-                                <div>
-                                    <input type="text" v-model="form.address">
+                                <div class="flex flex-col">
+                                    <label>Address</label>
+                                    <input type="text" v-model="form.address" class="rounded-md border-slate-400">
                                     <div v-if="form.errors.address">{{ form.errors.address }}</div>
                                 </div>
-                                <button type="submit" :disabled="form.processing">Login</button>
+                                <button
+                                class="w-1/2 rounded-md bg-emerald-400"
+                                type="submit"
+                                :disabled="form.processing">
+                                    Salva
+                                </button>
 
                             </div>
 
