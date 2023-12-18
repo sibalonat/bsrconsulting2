@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 
 import NewsComponent from "@/Components/NewsComponent.vue";
 import CardsComponent from "@/Components/CardsComponent.vue";
@@ -9,7 +9,7 @@ import DynamicHeroIcons from '@/Components/DynamicHeroIcons.vue';
 
 // import BigBall from "@/Components/BigBall.vue";
 import ServizesFront from "@/Components/ServizesFront.vue";
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+// import GuestLayout from '@/Layouts/GuestLayout.vue';
 
 // props
 const prop = defineProps({
@@ -22,6 +22,8 @@ const items = ref([])
 const news = ref([])
 
 const itemsString = ref('')
+
+const inertia = usePage()
 
 // hooks
 onMounted(() => {
@@ -83,10 +85,10 @@ onMounted(() => {
 
     <div class="w-screen overflow-x-hidden">
             <div class="grid w-full grid-cols-12 gap-2 mx-auto bg-slight">
-                <p class="col-span-4 col-start-2 my-4 ml-8 text-sm font-medium text-ebony">
+                <p class="col-span-4 col-start-2 my-4 ml-8 text-sm font-medium text-ebony" v-if="inertia.props.email">
                     <DynamicHeroIcons name="envelope" :size="5" class="inline" />
                     <span class="">
-                        antonio.barcela@something.com
+                        {{ inertia.props.email }}
                     </span>
                 </p>
             </div>
