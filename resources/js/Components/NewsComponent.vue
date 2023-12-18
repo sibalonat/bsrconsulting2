@@ -43,12 +43,12 @@ onMounted(() => {
             v-for="notizia in prop.news" :key="notizia.id"
             class="w-full font-sans text-base text-forth-gray">
                 <div class="grid w-full grid-cols-12 gap-x-8">
-                    <div class="col-span-1 my-auto">
+                    <div class="col-span-2 my-auto">
                         <p class="px-3 py-.5 text-sm font-display border rounded-md w-fit border-blue-950">
                             {{ notizia.data }}
                         </p>
                     </div>
-                    <div class="col-span-11 my-auto ml-10">
+                    <div class="col-span-10 my-auto ml-10">
                         <a :href="notizia.href" class="w-full">
                             {{ notizia.title }}
                         </a>

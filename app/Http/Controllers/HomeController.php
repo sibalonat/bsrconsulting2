@@ -41,7 +41,7 @@ class HomeController extends Controller
             $href = $item->getTag()->getAttribute('href')->getValue();
             return [
                 'title' => $title,
-                'href' => 'https://ambtirana.esteri.it'.$href,
+                'href' => $href,
                 'data' => $datacollection[$index]->firstChild()->text
             ];
         });
