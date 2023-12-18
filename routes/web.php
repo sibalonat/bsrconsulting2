@@ -43,6 +43,12 @@ Route::put('/settings/{setting}', [
     SettingController::class, 'store'
 ])->name('settings.store');
 
+Route::prefix('vista')->group(function () {
+    // Route::get('users', function () {
+    //     // Matches The "/admin/users" URL
+    // });
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

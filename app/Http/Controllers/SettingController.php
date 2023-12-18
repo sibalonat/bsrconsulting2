@@ -16,9 +16,19 @@ class SettingController extends Controller
 
     public function store(Request $request, Setting $setting)
     {
-        $setting->update([
-            'email' => $request->email,
-            'address' => $request->address,
-        ]);
+        if ($request->email && $request->address) {
+            $setting->update([
+                'email' => $request->email,
+                'address' => $request->address,
+            ]);
+        } else if ($request->email && !$request->address) {
+            $setting->update([
+                'email' => $request->email,
+            ]);
+        } else {
+            $setting->update([
+                'address' => $request->address,
+            ]);
+        }
     }
 }
